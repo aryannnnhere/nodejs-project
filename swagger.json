@@ -1,0 +1,420 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RestApi",
+    "version": "1.0.0",
+    "description": "API documentation for user functionality in the Nodejs project."
+  },
+  "components":{
+    "securitySchemes":{
+      "bearerAuth":{
+        "type":"http",
+        "scheme":"bearer",
+        "bearerFormat":"JWT"
+      }
+    }
+  },
+  "security":[
+{
+"bearerAuth":[]
+}
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3100"
+    }
+  ],
+  "paths": {
+    
+    "/login": {
+      "post": {
+        "summary": "SuperAdmin , Admin and Employee login in",
+        "description": "Endpoint for SuperAdmin , Admin and Employee log in.",
+        "requestBody": {
+          "description": "SuperAdmin , Admin and Employee login credentials.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "xyz@gmail.com"
+                  },
+                  "privateKey": {
+                    "type": "string",
+                    "example": "0xb371f38941ed1bcbf0ea6a4990766777fd3fc1dfd544e1ca8df88040ce5afd39"
+                  }
+                },
+                "required": ["email", "privateKey"]
+              }
+            }
+          }
+        },
+          "responses": {
+            "201": {
+              "description": " User logged in successfully."
+            },
+            "401": {
+              "description": "Invalid credentials."
+            }
+          }
+        }
+    },
+
+    "/company/create": {
+      "post": {
+        "summary": "only Super admin can add Company",
+        "description": "Endpoint for creating a new company.",
+        "requestBody": {
+          "description": "Company details.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyName": {
+                    "type": "string",
+                    "example": "Company Name"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Company Address"
+                  }
+                },
+                "required": ["name", "address"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Company created successfully."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    
+    
+    "/subadmin/create": {
+      "post": {
+        "summary": "only super-admin can add sub-Admin",
+        "description": "Endpoint for creating a new sub-admin.",
+        "requestBody": {
+          "description": "Sub-admin details.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Akash"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "singh"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "subadmin@example.com"
+                  },
+                  "companyId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "gender": {
+                    "type": "integer",
+                    "example": "male"
+                  }
+                },
+                "required": ["name", "email", "lastName", "companyId" , "gender"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Admin created successfully."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404":{
+            "description":"Not Found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+
+    "/getAllUsers": {
+      "get": {
+        "summary": "Get All User",
+        "description": "Retrieve a list of all Users with companies.",
+        "responses": {
+          "201": {
+            "description": "Successful response."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+
+    "/company/getall": {
+      "get": {
+        "summary": "Get All company",
+        "description": "Retrieve a list of all details of companies.",
+        "responses": {
+          "201": {
+            "description": "Successful response."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+
+    "/subadmin/getall": {
+      "get": {
+        "summary": "Get All subadmin",
+        "description": "Retrieve a list of all details of subadmin.",
+        "responses": {
+          "201": {
+            "description": "Successful response."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+
+    "/employee/getAll": {
+      "get": {
+        "summary": "Get list of All employees",
+        "description": "Retrieve a list of all employees.",
+        "responses": {
+          "201": {
+            "description": "Successful response."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    
+    "/employee/create": {
+      "post": {
+        "summary": "Only sub-admin can add Employee",
+        "description": "Endpoint for creating a new employee.",
+        "requestBody": {
+          "description": "Employee details.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Akash"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "singh"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "subadmin@example.com"
+                  },
+                  "companyId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "gender": {
+                    "type": "integer",
+                    "example": "male"
+                  }
+                },
+                "required": ["name", "email", "lastName", "companyId" , "gender"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Employee created successfully."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+   
+    
+    "/company/update/{id3}": {
+      "patch": {
+        "summary": "only super-admin update company",
+        "description": "Endpoint for updating company details.",
+        "parameters": [
+          {
+            "name": "id3",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Employee ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated company details.",
+          
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyName": {
+                    "type": "string",
+                    "example": "Akash"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "example": "singh"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "subadmin@example.com"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "required": ["companyName", "logo", "description"]
+                }
+                
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Company details updated successfully."
+          },
+          
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Company not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/employee/update/{id3}": {
+      "patch": {
+        "summary": "only employee can update Employee",
+        "description": "Endpoint for updating employee information.",
+        "parameters": [
+          {
+            "name": "id3",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Employee ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated employee details.",
+          
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Akash"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "singh"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "subadmin@example.com"
+                  },
+                  "companyId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "gender": {
+                    "type": "integer",
+                    "example": "male"
+                  }
+                }
+                
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Employee information updated successfully."
+          },
+          
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    }
+
+  }
+}
